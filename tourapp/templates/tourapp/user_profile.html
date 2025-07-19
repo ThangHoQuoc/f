@@ -1,5 +1,5 @@
 {% load static %}
-{% extends 'tourapp/layout.html'%}
+{% extends 'layout.html'%}
 
 
 {% block css %}
@@ -8,6 +8,22 @@
 
 
 {% block body %}
+<div class="container">
+    <div class="profile-header">
+        <h1>{{ user.username }}'s Profile</h1>
+    </div>
+    
+    <!-- User Profile Section -->
+    <div class="profile-section">
+        <div class="profile-avatar">
+            <img src="{{ profile.avatar.url }}" alt="{{ user.username }}'s Avatar" class="avatar-image">
+        </div>
+        <div class="profile-info">
+            <h2>{{ user.username }}</h2>
+            <p>{{ profile.bio }}</p>
+            <p>Joined: {{ user.date_joined|date:"F j, Y" }}</p>
+        </div>
+    </div>
 <!-- Use {% if request.user.is_authenticated %} to check to display the edit profile button-->
     <!-- Profile Cover Section -->
     <div class="cover-background">
@@ -16,7 +32,6 @@
         <!-- Phần cover thật -->
         <div class="profile-cover">
             <div class="cover-edit">
-                <button class="edit-cover-btn" id="editCoverBtn">Chỉnh sửa ảnh</button>
                 <div class="cover-img" id="coverImg"></div>
                 <div class="cover-guide" id="coverGuide">
                     <span style="font-size: 1.5em; vertical-align: middle;">
@@ -29,41 +44,18 @@
                 <img src="avatar.jpg" alt="Avatar" class="profile-avatar-large">
                 <div class="profile-details">
                     <h1 class="profile-name">
-                        {% if user.first_name and user.last_name %}
-                        
-                            {{ user.first_name }} {{ user.last_name }}
-                        {% else %}
-                            {{ user.username }}
-                        {% endif %}
+                        {{ user.username }}
                     </h1>
                 </div>
                 <div class="profile-actions">
-                    <button class="btn friend-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check-icon lucide-user-check"><path d="m16 11 2 2 4-4"/><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                        <span>Bạn bè</span>
-                    </button>
-                    <button class="btn message-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-more-icon lucide-message-circle-more"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>
-                        <span>Nhắn tin</span>
-                    </button>
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'edit_profile' user.id %}" class="btn btn-primary">Chỉnh sửa hồ sơ</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-    <div class="profile-tabs">
-        <ul class="tabs-list">
-            <li class="tab-item active">Bài viết</li>
-            <li class="tab-item">Giới thiệu</li>
-            <li class="tab-item">Bạn bè</li>
-            <li class="tab-item">Ảnh</li>
-            <li class="tab-item">Video</li>
-            <li class="tab-item">Check in</li>
-            <li class="tab-item more">
-                Xem thêm
-                <span class="tab-arrow">&#9660;</span>
-            </li>
-        </ul>
-    </div>
 
 
-{%endblock%}
+
+{% endblock %}

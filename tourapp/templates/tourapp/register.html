@@ -5,113 +5,113 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Đăng ký | Ftravel</title>
- <style>
-    /* Reset và thiết lập cơ bản */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  <style>
+      /* Reset và thiết lập cơ bản */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #111; /* Màu nền tối */
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #111; /* Màu nền tối */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-/* Container của form */
-.container {
-  width: 100%;
-  max-width: 420px;
-  padding: 20px;
-}
+  /* Container của form */
+  .container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+  }
 
-/* Hộp form đăng ký */
-.form-box {
-  background-color: #1c1c1e; /* Xám đen */
-  padding: 30px 25px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(255, 102, 0, 0.3); /* viền cam mờ */
-  text-align: center;
-}
+  /* Hộp form đăng ký */
+  .form-box {
+    background-color: #1c1c1e; /* Xám đen */
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.3); /* viền cam mờ */
+    text-align: center;
+  }
 
-/* Tiêu đề */
-.form-box h1 {
-  margin-bottom: 24px;
-  font-size: 26px;
-  color: #fff;
-}
+  /* Tiêu đề */
+  .form-box h1 {
+    margin-bottom: 24px;
+    font-size: 26px;
+    color: #fff;
+  }
 
-/* Input */
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  background-color: #2b2b2d;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  color: white;
-}
+  /* Input */
+  input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #2b2b2d;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    color: white;
+  }
 
-input:focus {
-  background-color: #3a3a3d;
-  outline: none;
-}
+  input:focus {
+    background-color: #3a3a3d;
+    outline: none;
+  }
 
-/* Nút đăng ký */
-button[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background-color: #ff6600;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+  /* Nút đăng ký */
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
 
-button[type="submit"]:hover {
-  background-color: #e65c00;
-}
+  button[type="submit"]:hover {
+    background-color: #e65c00;
+  }
 
-/* Đường kẻ */
-hr {
-  margin: 25px 0;
-  border: none;
-  border-top: 1px solid #444;
-}
+  /* Đường kẻ */
+  hr {
+    margin: 25px 0;
+    border: none;
+    border-top: 1px solid #444;
+  }
 
-/* Chuyển link quay về đăng nhập */
-.switch-btn {
-  padding: 10px;
-  width: 100%;
-  border: 2px solid #ff6600;
-  background-color: transparent;
-  color: #ff6600;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+  /* Chuyển link quay về đăng nhập */
+  .switch-btn {
+    padding: 10px;
+    width: 100%;
+    border: 2px solid #ff6600;
+    background-color: transparent;
+    color: #ff6600;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
 
-.switch-btn:hover {
-  background-color: #ff6600;
-  color: white;
-}
+  .switch-btn:hover {
+    background-color: #ff6600;
+    color: white;
+  }
 
-/* Link */
-a {
-  text-decoration: none;
-}
+  /* Link */
+  a {
+    text-decoration: none;
+  }
 
  </style>
 </head>
@@ -120,14 +120,15 @@ a {
     <div class="form-box">
       <h1>Đăng ký</h1>
       <form>
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Mật khẩu" required />
-        <input type="password" placeholder="Xác nhận mật khẩu" required />
+        <small>{% if error %}{{ error }}{% endif %}</small>
+        <input type="email" placeholder="Email" required name="email"/>
+        <input type="password" placeholder="Mật khẩu" name="password" required />
+        <input type="password" placeholder="Xác nhận mật khẩu" name="confirm_password" required />
         <button type="submit">Đăng ký</button>
         <hr />
         <p>Đã có tài khoản?</p>
-        <a href="login.html">
-          <button type="button" class="switch-btn">Quay lại đăng nhập</button>
+        <a href="{% url 'login' %}">
+          <button type="button" class="switch-btn" >Quay lại đăng nhập</button>
         </a>
       </form>   
     </div>
