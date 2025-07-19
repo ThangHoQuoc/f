@@ -1,0 +1,29 @@
+{% extends 'tourapp/layout.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h4>Kết quả tìm kiếm AI cho: "{{ query }}"</h4>
+
+    {% if ai_keywords %}
+        <p><strong>Gợi ý AI:</strong> {{ ai_keywords|join:", " }}</p>
+    {% endif %}
+
+    {% if tours %}
+        <ul class="list-group mt-3">
+            {% for tour in tours %}
+                <li class="list-group-item">
+                    <a href="{% url 'tour_detail' tour.id %}">{{ tour.title }}</a><br>
+                    <small>{{ tour.description|truncatewords:20 }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">Không tìm thấy tour phù hợp với khu vực này.</p>
+    {% endif %}
+
+    {% if raw_ai_response %}
+        <details class="mt-3"><summary>Xem phản hồi AI</summary>
+            <pre>{{ raw_ai_response }}</pre>
+        </details>
+    {% endif %}
+</div>
+{% endblock %}

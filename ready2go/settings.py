@@ -135,3 +135,6 @@ TEMPLATES[0]['DIRS'] = [BASE_DIR / "tourapp" / "templates"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+OPENAI_API_KEY = 'your-real-api-key-here'
+
+

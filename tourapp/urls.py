@@ -10,13 +10,14 @@ urlpatterns = [
     path("register/", views.register, name="register"),
     path("logout/", views.logout, name="logout"),
 
-    #tour paths
-    path("tours/", views.tour_list, name="tour_list"),
-    path("tour/<int:tour_id>/", views.tour_detail, name="tour_detail"),
-    path("tour/<int:tour_id>/comment/", views.tour_detail, name="tour_comment"),
-    
-    #wishlist paths
-    path("wishlist/", views.wishlist, name="wishlist"),
+    # Tour APIs
+    path("tour/<int:tour_id>/", views.tour_detail, name="tour_detail"),  # Tour detail page
+    path("tour/<int:tour_id>/comment/", views.tour_detail, name="tour_comment"),  # Placeholder
+    path("tour-list/", views.tour_list_page, name="tour_list_page"),
+    path("wishlist/", views.wishlist_page, name="wishlist_page"),
+
+    # API
+    path("tours/", views.api_tours, name="api_tours"),
     path("tour/<int:tour_id>/love/", views.love_tour, name="love_tour"),
     path("tour/<int:tour_id>/unlove/", views.unlove_tour, name="unlove_tour"),
     
@@ -30,6 +31,7 @@ urlpatterns = [
     path("company/<int:company_id>/edit/", views.edit_company_profile, name="edit_company_profile"),
     
     #comment paths
+    
     path("tour/<int:tour_id>/comment/<int:comment_id>/like/", views.like_comment, name="like_comment"),
     path("tour/<int:tour_id>/comment/<int:comment_id>/unlike/", views.unlike_comment, name="unlike_comment"),
     path("tour/<int:tour_id>/comment/<int:comment_id>/delete/", views.delete_comment, name="delete_comment"),
@@ -42,7 +44,6 @@ urlpatterns = [
     path('api/tour/<int:tour_id>/images/', views.tour_images_api, name='tour_images_api'),
     path('api/tour/<int:tour_id>/delete-image/<int:image_id>/', views.delete_tour, name='delete_tour_image_api'),
     #api paths
-    path("api/user/booked-tours/", views.user_booked_tours_api, name="user_booked_tours_api"),
     path("tour/<int:tour_id>/comments/", views.tour_comments_api, name="tour_comments_api"),
     
     # booking paths

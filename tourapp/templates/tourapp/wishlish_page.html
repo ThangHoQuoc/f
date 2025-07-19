@@ -1,0 +1,25 @@
+<!-- wishlist.html -->
+{% extends "tourapp/layout.html" %}
+{% block body %}
+  <h2>Tour yêu thích</h2>
+  <div id="tour-list">Loading...</div>
+
+  <script>
+    fetch('/wishlist/')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('tour-list');
+        container.innerHTML = '';
+        data.forEach(tour => {
+          container.innerHTML += `
+            <div class="tour-card">
+              <img src="${tour.image_url}" alt="${tour.title}" />
+              <h3>${tour.title}</h3>
+              <p>Giá: ${tour.price.toLocaleString()}đ</p>
+              <p>${tour.duration}</p>
+            </div>
+          `;
+        });
+      });
+  </script>
+{% endblock %}

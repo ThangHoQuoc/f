@@ -38,35 +38,38 @@
         </div>
 
         <nav class="nav">
-          <ul class="nav-links">
-            <li><a href="{% url 'home' %}">Trang chủ</a></li>
-            <li><a href="{% url 'become_companion' %}">Trở thành Tour Companion</a></li>
-            <li>
-              <a href="{% url 'wishlist' %}"><i class="fa-regular fa-heart"></i> Wishlist</a>
-            </li>
-              {%if request.user.is_authenticated%}  
-            <li class="profile-menu">
-              <a href="{% url 'profile' request.user.id %}" id="profileBtn"
-                ><i class="fa-regular fa-user"></i> Profile</a>
+  <ul class="nav-links">
+    <li><a href="{% url 'home' %}">Trang chủ</a></li>
+    <li><a href="{% url 'become_companion' %}">Trở thành Tour Companion</a></li>
+    <li><a href="{% url 'tour_list_page' %}">Danh sách tour</a></li>
+    <li>
+      <a href="{% url 'wishlist_page' %}">
+        <i class="fa-regular fa-heart"></i> Wishlist
+      </a>
+    </li>
 
-              
-              <div class="dropdown">
-                <div class="dropdown-header">Profile</div>
-                {% else %}
-                <a href="{% url 'login'%}">Log in or sign up</a>
-                {% endif %}
-                <a href="#"
-                  >Updates <span class="badge">Newest Version</span></a
-                >
-                <a href="#"
-                  >Appearance <span class="right">Always dark</span></a
-                >
-                <a href="#">Support</a>
-                <a href="#">Download the app</a>
-              </div>
-            </li>
-          </ul>
-        </nav>
+    {% if request.user.is_authenticated %}
+      <li class="profile-menu">
+        <a href="{% url 'profile' request.user.id %}" id="profileBtn">
+          <i class="fa-regular fa-user"></i> {{ request.user.username }}
+        </a>
+
+        <div class="dropdown">
+          <div class="dropdown-header">Tài khoản</div>
+          <a href="{% url 'profile' request.user.id %}">Thông tin cá nhân</a>
+          <a href="#">Giao diện <span class="right">Dark mode</span></a>
+          <a href="#">Hỗ trợ</a>
+          <a href="#">Tải ứng dụng</a>
+          <a href="{% url 'logout' %}">Đăng xuất</a>
+        </div>
+      </li>
+    {% else %}
+      <li>
+        <a href="{% url 'login' %}">Đăng nhập / Đăng ký</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
       </div>
     </header>
     {% block body%}

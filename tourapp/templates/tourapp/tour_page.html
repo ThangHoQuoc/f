@@ -1,0 +1,59 @@
+{% extends "tourapp/layout.html" %}
+{% block body %}
+<h1 style="text-align: center; color: orange; margin-top: 20px;">
+  {% if mode == "wishlist" %}Tour Yêu Thích{% else %}Danh sách Tour{% endif %}
+</h1>
+
+<div class="tour-list" id="tour-list">Đang tải...</div>
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+<script>
+  const mode = "{{ mode }}";
+  const apiUrl = mode === "wishlist" ? "/tours/?loved=true" : "/tours/";
+
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(tours => {
+      const container = document.getElementById('tour-list');
+      container.innerHTML = "";
+
+      if (tours.length === 0) {
+        container.innerHTML = "<p style='text-align:center'>Không có tour nào.</p>";
+        return;
+      }
+
+      tours.forEach(tour => {
+        const card = document.createElement('div');
+        card.className = "tour-card";
+        card.innerHTML = `
+          <img src="${tour.image_url}" alt="${tour.title}" />
+          <div class="tour-info">
+            <h2>${tour.title}</h2>
+            <p class="price">Giá: ${tour.price.toLocaleString()}đ</p>
+            <p class="time">Thời gian: ${tour.duration}</p>
+            <a href="/tour/${tour.id}/" class="modal-book">Xem chi tiết</a>
+            <button onclick="toggleWishlist(${tour.id}, this)">
+              ${tour.loved ? "❤️" : "🤍"}
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    });
+
+  function toggleWishlist(tourId, btn) {
+    const loved = btn.innerText.includes("❤️");
+    const url = loved ? `/tour/${tourId}/unlove/` : `/tour/${tourId}/love/`;
+
+    fetch(url, {
+      method: 'POST',
+      headers: { 'X-CSRFToken': getCSRFToken() }
+    }).then(res => {
+      if (res.ok) btn.innerText = loved ? "🤍" : "❤️";
+    });
+  }
+
+  function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+  }
+</script>
+{% endblock %}
