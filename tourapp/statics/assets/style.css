@@ -86,8 +86,8 @@
 
 /* === HERO === */
 .hero {
-  background: url("https://picsum.photos/id/1005/1200/400") center/cover
-    no-repeat;
+  background: url("https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg?_gl=1*w8mzz1*_ga*MTAwMTE4NjAxOC4xNzUyOTA2ODY4*_ga_8JE65Q40S6*czE3NTI5MDY4NjckbzEkZzEkdDE3NTI5MDc4OTEkajYwJGwwJGgw")
+    center/cover no-repeat;
   height: 400px;
   display: flex;
   align-items: center;
@@ -464,5 +464,30 @@ h2 {
   font-size: 16px;
   color: #4f5a68;
   max-width: 45%;
+  margin: 0;
+}
+
+.section-heading-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.section-heading-flex h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: #1b1b1f;
+  flex: 1 1 50%;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.section-heading-flex p {
+  font-size: 16px;
+  color: #4f5a68;
+  flex: 1 1 45%;
   margin: 0;
 }

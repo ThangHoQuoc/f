@@ -76,5 +76,45 @@
 
     {%endblock%}
     
+  <style>
+    body.light-mode {
+      background: #f5f5f5 !important;
+      color: #222 !important;
+    }
+    body.light-mode .header, body.light-mode .tour-card, body.light-mode .form-box {
+      background: #fff !important;
+      color: #222 !important;
+      box-shadow: 0 0 10px rgba(0,0,0,0.07);
+    }
+    body.light-mode .nav-links a, body.light-mode .profile-menu a, body.light-mode .dropdown {
+      color: #222 !important;
+    }
+    body.light-mode .dropdown {
+      background: #fff !important;
+    }
+    body.light-mode .fa-moon { color: #222; }
+    body.light-mode .fa-sun { color: #ffb300; }
+  </style>
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    let isDark = true;
+    themeToggle.onclick = function(e) {
+      e.preventDefault();
+      isDark = !isDark;
+      if(isDark) {
+        document.body.classList.remove('light-mode');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        themeText.textContent = 'Chế độ tối';
+      } else {
+        document.body.classList.add('light-mode');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        themeText.textContent = 'Chế độ sáng';
+      }
+    };
+  </script>
   </body>
 </html>
