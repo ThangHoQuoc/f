@@ -1,15 +1,278 @@
-{% extends "base.html" %}
-{% block content %}
-<h2>{{ tour.title }}</h2>
-<p>{{ tour.description }}</p>
-<p>Price: {{ tour.price }}</p>
-<p>Duration: {{ tour.duration_day }} days, {{ tour.duration_night }} nights</p>
-<h3>Images</h3>
-<div>
-    {% for img in tour.images.all %}
-        <img src="{{ img.image.url }}" style="max-width:150px; margin:5px;">
-    {% empty %}
-        <p>No images uploaded.</p>
-    {% endfor %}
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chi tiết Tour - Ftravel</title>
+    <link rel="stylesheet" href="assets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        background: #121212;
+        color: #fff;
+        padding-top: 80px;
+      }
+
+      .header {
+        background: #1e1e1e;
+        padding: 1rem 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo a {
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 1.2rem;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+      }
+
+      .nav-links li a {
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links li a:hover {
+        color: #ffa500;
+      }
+
+      .badge {
+        background-color: #ff1a1a;
+        color: white;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 6px;
+        margin-left: 4px;
+      }
+
+      .right {
+        margin-left: 6px;
+        color: #ccc;
+        font-size: 0.8rem;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .tour-detail {
+        display: flex;
+        flex-wrap: column;
+        gap: 2rem;
+        padding: 2rem 0;
+      }
+
+      .tour-gallery {
+        flex: 2;
+      }
+
+      .tour-gallery img {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+      }
+
+      .tour-info {
+        flex: 1;
+        background: #1e1e1e;
+        padding: 1.5rem;
+        border-radius: 10px;
+      }
+
+      .tour-info h2 {
+        margin-top: 0;
+      }
+
+      .tour-info .price {
+        font-size: 1.5rem;
+        color: #ffa500;
+        margin: 1rem 0;
+      }
+
+      .btn {
+        background: #ffa500;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #000;
+
+        .tour-details-extended {
+          margin-top: 2rem;
+          line-height: 1.6;
+        }
+
+        .tour-details-extended h3 {
+          color: #ffa500;
+          margin-bottom: 0.5rem;
+        }
+
+        .tour-details-extended ul {
+          padding-left: 1.25rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .tour-details-extended ul li {
+          margin-bottom: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container nav-container">
+        <div class="logo">
+          <a href="{% url 'home' %}">Ftravel</a>
+        </div>
+        <nav class="nav">
+          <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Trang chủ</a></li>
+            <li>
+              <a href="{% url 'become_companion' %}"
+                >Trở thành Tour Companion</a
+              >
+            </li>
+            <li><a href="{% url 'wishlist' %}">Wishlist</a></li>
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'profile' request.user.id %}">Profile</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Log in or sign up</a></li>
+            {% endif %}
+            <li>
+              <a href="#">Updates <span class="badge">Newest Version</span></a>
+            </li>
+            <li>
+              <a href="#">Appearance<span class="right">Always dark</span></a>
+            </li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Download the app</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Tour Detail Section -->
+    <div class="container">
+      <div class="tour-detail">
+        <div class="tour-gallery">
+          <img
+            src="https://images.unsplash.com/photo-1664309513316-4946986ab799?w=700&auto=format&fit=crop&q=60"
+            alt="Tour Charleston"
+          />
+          <div style="display: flex; gap: 1rem">
+            <img
+              src="https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=300,height=400,dpr=2/tour_img/63ab2cc3f09b8.jpeg"
+              alt="Hướng dẫn viên"
+              style="width: 49%"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1730646218045-62d7fac0a1bf?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dHJhdmVsJTIwY2FycmlhZ2V8ZW58MHx8MHx8fDA%3D"
+              alt="Xe ngựa"
+              style="width: 49%"
+            />
+          </div>
+        </div>
+
+        <div class="tour-info">
+          <h2>Charleston: Tham Quan Khu Phố Cổ Bằng Xe Ngựa</h2>
+          <p>
+            Khám phá khu phố cổ lịch sử Charleston bằng xe ngựa truyền thống
+            cùng hướng dẫn viên. Chiêm ngưỡng những biệt thự, nhà thờ và khu
+            vườn tuyệt đẹp của thành phố.
+          </p>
+          <ul>
+            <li>✔️ Hủy miễn phí trước 24 giờ</li>
+            <li>✔️ Đặt trước & thanh toán sau</li>
+            <li>✔️ Thời lượng: 1 giờ</li>
+            <li>✔️ Hướng dẫn viên trực tiếp (tiếng Anh)</li>
+            <li>✔️ Hỗ trợ người dùng xe lăn</li>
+          </ul>
+          <div class="price">Từ ₫1.360.400 / người</div>
+          <button class="btn">Kiểm tra khả dụng</button>
+          <hr style="margin: 2rem 0; border-color: #333" />
+
+          <div class="tour-details-extended">
+            <h3>Điểm nổi bật</h3>
+            <ul>
+              <li>🏛️ Tham quan khu dân cư lịch sử của Charleston</li>
+              <li>👨‍🏫 Hướng dẫn bởi người có chứng nhận hành nghề</li>
+              <li>
+                🌆 Khám phá cảnh đẹp thành phố và những nơi có thể ghé sau
+              </li>
+              <li>📜 Tìm hiểu lịch sử 350 năm của Charleston</li>
+            </ul>
+
+            <h3>Mô tả chi tiết</h3>
+            <p>
+              Ngồi trên xe ngựa truyền thống khám phá khu phố cổ Charleston cùng
+              hướng dẫn viên. Lắng nghe những câu chuyện thú vị khi đi ngang qua
+              các điểm nổi bật như cảng Charleston, Rainbow Row, King Street,
+              White Point Gardens và Charleston Battery.
+              <br /><strong>Xem thêm...</strong>
+            </p>
+
+            <h3>Bao gồm</h3>
+            <ul>
+              <li>✔️ Dịch vụ hướng dẫn viên</li>
+              <li>✔️ Tour tham quan bằng xe ngựa</li>
+              <li>✔️ Sử dụng nhà vệ sinh</li>
+              <li>❌ Tiền tip</li>
+            </ul>
+
+            <h3>Điểm tập trung</h3>
+            <p>
+              Làm thủ tục tại quầy lễ tân của Old South Carriage Co. Vào qua cửa
+              chính và gặp nhân viên tại quầy. Khu vực chờ có nhà vệ sinh, ghế
+              ngồi và nước uống.
+              <br />Nếu không có mặt trước giờ khởi hành 10 phút, bạn sẽ mất
+              suất đặt chỗ và được chuyển sang chuyến tiếp theo. <br /><a
+                href="#"
+                style="color: #ffa500"
+                >Mở trên Google Maps →</a
+              >
+            </p>
+
+            <h3>Thông tin cần biết</h3>
+            <ul>
+              <li>🌧️ Nếu thời tiết xấu, có thể hoàn tiền hoặc đổi ngày</li>
+              <li>📃 Áp dụng Điều khoản & Giải trừ trách nhiệm</li>
+              <li>🎟️ Khi mua vé, bạn đồng ý với quy định của tour xe ngựa</li>
+              <li><strong>Xem thêm...</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
