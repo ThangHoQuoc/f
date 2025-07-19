@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật thông tin | Ftravel</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #111;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+        .container {
+          width: 100%;
+          max-width: 420px;
+          padding: 20px;
+        }
+        .form-box {
+          background-color: #1c1c1e;
+          padding: 30px 25px;
+          border-radius: 12px;
+          box-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+          text-align: center;
+        }
+        .form-box h1 {
+          margin-bottom: 24px;
+          font-size: 26px;
+          color: #fff;
+        }
+        input {
+          width: 100%;
+          padding: 12px;
+          margin: 10px 0;
+          background-color: #2b2b2d;
+          border: none;
+          border-radius: 6px;
+          font-size: 15px;
+          color: white;
+        }
+        input:focus {
+          background-color: #3a3a3d;
+          outline: none;
+        }
+        button[type="submit"] {
+          width: 100%;
+          padding: 12px;
+          margin-top: 10px;
+          background-color: #ff6600;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          font-weight: bold;
+          font-size: 15px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+          background-color: #e65c00;
+        }
+        hr {
+          margin: 25px 0;
+          border: none;
+          border-top: 1px solid #444;
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h1>Cập nhật thông tin</h1>
+      <form id="updateForm">
+        <input type="text" placeholder="Họ và tên" required />
+        <input type="text" placeholder="Số điện thoại" required />
+        <input type="date" placeholder="Ngày sinh" required />
+        <textarea placeholder="Giới thiệu bản thân" rows="3" style="width:100%;padding:12px;margin:10px 0;background-color:#2b2b2d;border:none;border-radius:6px;font-size:15px;color:white;"></textarea>
+        <button type="submit">Cập nhật</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.getElementById('updateForm').onsubmit = function(e) {
+      e.preventDefault();
+      window.location.href = 'index.html';
+    };
+  </script>
+</body>
+</html>
