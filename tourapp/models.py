@@ -19,7 +19,7 @@ def tour_image_upload_path(instance, filename):
 
 # Create your models here.
 class CompanyTour(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     company_name = models.CharField(max_length=200)
     phone_number = models.CharField(
         max_length=10, blank=True, null=True,

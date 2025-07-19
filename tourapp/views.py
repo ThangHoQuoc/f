@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+import urllib.parse
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
@@ -329,35 +331,60 @@ def delete_tour(request, tour_id, image_id):
     image.delete()
     return JsonResponse({'status': 'ok'})
 
-@require_http_methods(["GET", "POST"])
+
 def book_tour(request, tour_id):
     tour = get_object_or_404(Tour, id=tour_id)
+    user = tour.created_by
 
-    if request.method == "POST":
-        bank_name = request.POST.get("bank_name")
-        bank_number = request.POST.get("bank_number")
-        amount = tour.price
-        qr_data = f"{bank_name}:{bank_number} - ${amount}"
+    try:
+        company = user.companytour
+    except:
+        company = None
 
-        # Redirect to payment page, passing data via session (or GET for demo)
-        request.session['qr_data'] = qr_data
-        request.session['tour_title'] = tour.title
-        request.session['amount'] = float(amount)
-        return redirect('payment_view')
+    if not company or not company.bank or not company.bank_account_number:
+        return render(request, 'tourapp/pay.html', {
+            'qr_url': '',
+            'tour_title': tour.title,
+            'amount': tour.price,
+            'qr_data': '⚠️ Thiếu thông tin ngân hàng công ty.'
+        })
 
-    return render(request, 'tourapp/book_form.html', {'tour': tour})
+    # Map bank name to VietQR code
+    bank_code_map = {
+        'MB Bank': 'mb',
+        'ACB': 'acb',
+        'Vietcombank': 'vcb',
+        'Techcombank': 'tcb',
+        'TPBank': 'tpb',
+        'BIDV': 'bidv',
+        'VietinBank': 'ctg',
+        # thêm các ngân hàng khác nếu bạn dùng
+    }
 
-def payment_view(request):
-    qr_data = request.session.get('qr_data', 'Unknown')
-    tour_title = request.session.get('tour_title', 'Unknown')
-    amount = request.session.get('amount', 0)
+    bank_code = bank_code_map.get(company.bank)
+    if not bank_code:
+        return render(request, 'tourapp/pay.html', {
+            'qr_url': '',
+            'tour_title': tour.title,
+            'amount': tour.price,
+            'qr_data': f'⚠️ Ngân hàng \"{company.bank}\" chưa hỗ trợ VietQR.'
+        })
 
-    # Create QR URL via qr.io-like services (use a free one like goqr.me)
-    qr_url = f"https://api.qrserver.com/v1/create-qr-code/?data={qr_data}&size=200x200"
+    amount = int(tour.price)  # nếu bạn muốn làm tròn
+    add_info = f"Thanh toan tour {tour.title}"
+    account_name = company.company_name
+    
+    # Encode addInfo và accountName
+    qr_url = (
+        f"https://img.vietqr.io/image/{bank_code}-{company.bank_account_number}-qr_only.png"
+        f"?amount={amount}"
+        f"&addInfo={urllib.parse.quote(add_info)}"
+        f"&accountName={urllib.parse.quote(account_name)}"
+    )
 
     return render(request, 'tourapp/pay.html', {
         'qr_url': qr_url,
-        'tour_title': tour_title,
-        'amount': amount,
-        'qr_data': qr_data
+        'tour_title': tour.title,
+        'amount': tour.price,
+        'qr_data': f"{account_name} - {company.bank_account_number} ({company.bank})"
     })

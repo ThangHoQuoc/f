@@ -47,5 +47,4 @@ urlpatterns = [
     
     # booking paths
     path("tour/<int:tour_id>/book/", views.book_tour, name="book_tour"),
-    path('payment/', views.payment_view, name='payment_view'),
 ]
