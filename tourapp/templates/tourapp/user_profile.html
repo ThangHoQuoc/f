@@ -1,8 +1,11 @@
+{% load static %}
 {% extends 'tourapp/layout.html'%}
+
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'assets/user_profile.css' %}">
 {% endblock %}
+
 
 {% block body %}
 <!-- Use {% if request.user.is_authenticated %} to check to display the edit profile button-->
@@ -25,10 +28,14 @@
             <div class="profile-info">
                 <img src="avatar.jpg" alt="Avatar" class="profile-avatar-large">
                 <div class="profile-details">
-                    <h1 class="profile-name">Phạm Truyền</h1>
-                    <div class="profile-friends">
-                        <span>15 bài đánh giá</span> • <span>1,3k lượt tương tác</span> • <span>169 người bạn</span>
-                    </div>
+                    <h1 class="profile-name">
+                        {% if user.first_name and user.last_name %}
+                        
+                            {{ user.first_name }} {{ user.last_name }}
+                        {% else %}
+                            {{ user.username }}
+                        {% endif %}
+                    </h1>
                 </div>
                 <div class="profile-actions">
                     <button class="btn friend-btn">
@@ -59,4 +66,4 @@
     </div>
 
 
-{% endblock %}
+{%endblock%}
