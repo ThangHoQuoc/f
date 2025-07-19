@@ -188,3 +188,82 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize position
     updateCoverPosition();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchUserProfile();
+    fetchBookedTours();
+});
+
+function fetchUserProfile() {
+    fetch('/api/user/profile/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            // Nếu cần token:
+            // 'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Hiển thị username
+        const nameElement = document.querySelector('.profile-name');
+        if (nameElement) nameElement.textContent = data.username;
+
+        // Hiển thị avatar (nếu có)
+        const avatarImg = document.querySelectorAll('img[alt="Avatar"]');
+        avatarImg.forEach(img => {
+            img.src = data.avatar_url || 'avatar.jpg';
+        });
+
+        // Hiển thị liên kết mạng xã hội
+        const socialLinks = document.querySelector('.social-links');
+        if (socialLinks) {
+            socialLinks.innerHTML = `
+                <span><a href="${data.facebook}" target="_blank"><i class="fa-brands fa-facebook"></i></a></span> • 
+                <span><a href="${data.instagram}" target="_blank"><i class="fa-brands fa-instagram"></i></a></span> • 
+                <span><a href="${data.twitter}" target="_blank"><i class="fa-brands fa-twitter"></i></a></span>
+            `;
+        }
+    })
+    .catch(error => console.error('Lỗi khi lấy dữ liệu user:', error));
+}
+
+function fetchBookedTours() {
+    fetch('/api/user/booked-tours/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const tourList = document.querySelector('.tour-list');
+        if (!tourList) return;
+
+        // Xóa các tour hiện tại
+        tourList.innerHTML = '';
+
+        data.forEach(tour => {
+            const tourCard = document.createElement('div');
+            tourCard.className = 'tour-card';
+            tourCard.innerHTML = `
+                <a href="/tours/${tour.id}/">
+                    <img src="${tour.image_url}" alt="${tour.name}" />
+                    <div class="tour-info">
+                        <h2 class="tour-name-rating">
+                            <span class="tour-name">${tour.name}</span>
+                            <span class="tour-rating">
+                                <span>${tour.rating}/5</span>
+                                <i class="icon-star"></i>
+                            </span>
+                        </h2>
+                        <p class="price">Giá: ${tour.price.toLocaleString('vi-VN')}đ</p>
+                        <p class="time">Thời gian: ${tour.duration}</p>
+                    </div>
+                </a>
+            `;
+            tourList.appendChild(tourCard);
+        });
+    })
+    .catch(error => console.error('Lỗi khi lấy danh sách tour:', error));
+}

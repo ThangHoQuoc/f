@@ -291,7 +291,7 @@ a {
     width: 100%;
     height: 300px;
     border-radius: 0 0 12px 12px;
-    background-image: url('avatar.jpg');
+    background-image: url('https://maytinhvui.com/wp-content/uploads/2020/11/hinh-nen-may-tinh-4k-game-04.jpg');
     background-size: cover;
     background-position: center center; /* Có thể thay đổi giá trị này */
     background-repeat: no-repeat;
@@ -416,11 +416,13 @@ a {
 .under-name {
     display: flex;
     align-items: center;
+    width: 100%;
+    flex-direction: row;
     justify-content: space-between;
     gap: auto;
 }
 
-.actions {
+.action-btn {
     display: flex;
     align-items: center;
     padding: 10px;
@@ -430,16 +432,12 @@ a {
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-}
-
-.action-btn {
-    display: flex;
-    align-items: center;
-    background-color: var(--secondary);
-    color: var(--light);
-    font-size: 1rem;
     border: none;
     gap: 5px;
+}
+
+.action-btn:hover {
+    background-color: var(--primary);
 }
 
 .social-links {
