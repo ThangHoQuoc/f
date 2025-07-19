@@ -1,118 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  font-family: Arial, sans-serif;
-  background: #111;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng Nhập</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-.container {
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+      overflow-x: hidden;
+    }
 
-.form-box {
-  background: #1c1c1e;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
-  color: white;
-  text-align: center;
-}
+    .hero-scroll {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      padding: 20px;
+      animation: scrollGrid 30s linear infinite;
+    }
 
-.form-box h1 {
-  margin-bottom: 20px;
-  color: white;
-}
+    .hero-scroll img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 5px;
-  background: #333;
-  color: white;
-  font-size: 14px;
-}
+    @keyframes scrollGrid {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-50%);
+      }
+    }
 
-input:focus {
-  outline: none;
-  background: #444;
-}
+    .login-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 0;
+    }
 
-button {
-  width: 100%;
-  padding: 12px;
-  background: #ff6600;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  cursor: pointer;
-  font-weight: bold;
-}
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
 
-button:hover {
-  background: #e65c00;
-}
+    .form-box {
+      background: #1c1c1e;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
+      color: white;
+      text-align: center;
+    }
 
-.signup-btn {
-  background: transparent;
-  color: #ff6600;
-  border: 2px solid #ff6600;
-  margin-top: 15px;
-}
+    .form-box h1 {
+      margin-bottom: 20px;
+    }
 
-.signup-btn:hover {
-  background: #ff6600;
-  color: white;
-}
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background: #333;
+      color: white;
+      font-size: 14px;
+    }
 
-a {
-  color: #ff6600;
-  display: block;
-  margin-top: 10px;
-  text-decoration: none;
-  font-size: 14px;
-}
+    input:focus {
+      outline: none;
+      background: #444;
+    }
 
-hr {
-  border: none;
-  border-top: 1px solid #444;
-  margin: 20px 0;
-}
-    </style>
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #e65c00;
+    }
+
+    .signup-btn {
+      background: transparent;
+      color: #ff6600;
+      border: 2px solid #ff6600;
+      margin-top: 15px;
+    }
+
+    .signup-btn:hover {
+      background: #ff6600;
+      color: white;
+    }
+
+    a {
+      color: #ff6600;
+      display: block;
+      margin-top: 10px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #444;
+      margin: 20px 0;
+    }
+  </style>
 </head>
-<body> 
+<body>
+
+  <!-- Hero scroll section -->
+  <section class="hero-scroll">
+    <img src="C:\Users\ASUS\backendd\f\tourapp\templates\tourapp\img\1.jpg" />
+    <img src="f/tourapp/2.jpg" />
+    <img src="f/tourapp/3.jpg" />
+    <img src="f/tourapp/4.jpg" />
+    <img src="f/tourapp/5.jpg" />
+    <img src="f/tourapp/6.jpg" />
+  </section>
+
+  <!-- Login form section -->
+  <section class="login-section">
     <div class="container">
-    <div class="form-box">
-      <h1>Đăng nhập</h1>
-      <form action="#">
-        <input type="text" placeholder="Username" required />
-        <input type="password" placeholder="Mật khẩu" required />
-        <button type="submit">Đăng nhập</button>
-        <a href="#">Quên mật khẩu?</a>
-        <hr />
-        <button class="signup-btn">
-            <a href="{%url 'register'%}">Tạo tài khoản mới</a>
-        </button>
-      </form>
+      <div class="form-box">
+        <h1>Đăng nhập</h1>
+        <form action="#">
+          <input type="text" placeholder="Username" required />
+          <input type="password" placeholder="Mật khẩu" required />
+          <button type="submit">Đăng nhập</button>
+          <a href="#">Quên mật khẩu?</a>
+          <hr />
+          <a href="register.html">
+            <button type="button" class="signup-btn">Tạo tài khoản mới</button>
+          </a>
+        </form>
+      </div>
     </div>
-  </div>
+  </section>
+
 </body>
 </html>
