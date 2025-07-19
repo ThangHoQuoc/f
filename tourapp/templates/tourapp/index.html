@@ -1,39 +1,5 @@
 {% block body %}
-    <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <div class="logo">
-          <a href="#" onclick="location.reload()" class="logo-link">Ftravel</a>
-        </div>
 
-        <nav class="nav">
-          <ul class="nav-links">
-            <li><a href="{% url 'home' %}">Trang chủ</a></li>
-            <li><a href="{% url 'become_companion' %}">Trở thành Tour Companion</a></li>
-            <li>
-              <a href="{% url 'wishlist' %}"><i class="fa-regular fa-heart"></i> Wishlist</a>
-            </li>
-            <li class="profile-menu">
-              <a href="{% url 'profile' %}" id="profileBtn"
-                ><i class="fa-regular fa-user"></i> Profile</a
-              >
-              <div class="dropdown">
-                <div class="dropdown-header">Profile</div>
-                <a href="#">Log in or sign up</a>
-                <a href="#"
-                  >Updates <span class="badge">Newest Version</span></a
-                >
-                <a href="#"
-                  >Appearance <span class="right">Always dark</span></a
-                >
-                <a href="#">Support</a>
-                <a href="#">Download the app</a>
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
 
     <!-- Hero banner -->
     <section class="hero">
@@ -61,14 +27,15 @@
 
     <!-- Popular Destinations -->
     <section class="section">
+      {% for tour in tours %}
       <div class="container">
         <h2>Địa điểm thu hút</h2>
         <div class="grid cards toggle">
           <div class="card">
-            <img src="{image_url}" />
+            <img src="{{tour.image_url}}" />
             <div class="card-info">
-              <h3>{destination}</h3>
-              <p>{price}đ / khách</p>
+              <h3>{{tour.destination}}</h3>
+              <p>{{tour.price}}đ / khách</p>
             </div>
           </div>
 
