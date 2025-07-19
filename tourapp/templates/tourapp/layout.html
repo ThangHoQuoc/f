@@ -6,15 +6,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ftravel - Đặt tour du lịch</title>
-    <link rel="stylesheet" href="assets/global.css" />
-    <link rel="stylesheet" href="assets/home.css" />
+    <link rel="stylesheet" href="{% static 'assets/global.css'%}" />
+    <link rel="stylesheet" href="{% static 'assets/home.css'%}" />
     <!-- Flatpickr -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     />
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
       flatpickr("#departureDate", {
         dateFormat: "d-m-Y",
@@ -22,7 +22,8 @@
         locale: "vn",
       });
     </script>
-
+    {%block css%}
+    {% endblock %}
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -43,13 +44,15 @@
             <li>
               <a href="{% url 'wishlist' %}"><i class="fa-regular fa-heart"></i> Wishlist</a>
             </li>
+              {%if request.user.is_authenticated%}  
             <li class="profile-menu">
-              <a href="#" id="profileBtn"
-                ><i class="fa-regular fa-user"></i> Profile</a
-              >
+              <a href="{% url 'profile' %}" id="profileBtn"
+                ><i class="fa-regular fa-user"></i> Profile</a>
+
+              
               <div class="dropdown">
                 <div class="dropdown-header">Profile</div>
-                {% if not request.user.is_authenticated%}
+                {% else %}
                 <a href="{% url 'login'%}">Log in or sign up</a>
                 {% endif %}
                 <a href="#"
