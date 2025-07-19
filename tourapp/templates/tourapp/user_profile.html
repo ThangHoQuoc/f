@@ -1,30 +1,84 @@
+<!DOCTYPE html>
 {% load static %}
-{% extends 'layout.html'%}
-
-
-{% block css %}
-<link rel="stylesheet" href="{% static 'assets/user_profile.css' %}">
-{% endblock %}
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'assets/user_profile.css' %}">
+    <script src="{% static 'js/user_profile.js' %}"></script>
+    <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+    <title>FTravel - Profile</title>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="navbar-container">
+            <!-- Logo -->
+            <div class="logo-section">
+                <a href="#!" class="logo-text">FTravel</a>
+            </div>
+            <!-- Search Bar -->
+            <form class="search-bar">
+                <i class="icon-search"></i>
+                <input type="text" placeholder="Tìm kiếm ...." />
+                <button type="submit">Tìm kiếm</button>
+            </form>
+            <!-- Navigation Links -->
+            <nav class="nav-links">
+                <a href="#" class="nav-item">
+                    <i class="icon-house"></i>
+                    <span>Trang chủ</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="icon-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="icon-user"></i>
+                    <span>Trang cá nhân</span>
+                </a>
+            </nav>
+            <!-- Profile Avatar -->
+            <div class="profile-avatar">
+                <button onclick="toggleDropdown()" class="avatar-button">
+                    <img src="avatar.jpg" alt="Avatar" />
+                    <span class="dropdown-arrow" id="dropdownArrow">&#9660;</span>
+                </button>
+                <ul class="dropdown-menu" id="dropdownMenu">
+                    <li class="dropdownItem">
+                        <a href="#" class="dropdown-link">
+                            <i class="icon-circle-user"></i>
+                            <span>Trang cá nhân</span>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="dropdownItem">
+                        <a href="#" class="dropdown-link">
+                            <i class="icon-settings"></i>
+                            <span>Cài đặt</span>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="dropdownItem">
+                        <a href="#" class="dropdown-link">
+                            <i class="icon-message-square-warning"></i>
+                            <span>Đóng góp ý kiến</span>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="dropdownItem">
+                        <a href="#" class="dropdown-link">
+                            <i class="icon-log-out"></i>
+                            <span>Đăng xuất</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
 
 
 {% block body %}
-<div class="container">
-    <div class="profile-header">
-        <h1>{{ user.username }}'s Profile</h1>
-    </div>
-    
-    <!-- User Profile Section -->
-    <div class="profile-section">
-        <div class="profile-avatar">
-            <img src="{{ profile.avatar.url }}" alt="{{ user.username }}'s Avatar" class="avatar-image">
-        </div>
-        <div class="profile-info">
-            <h2>{{ user.username }}</h2>
-            <p>{{ profile.bio }}</p>
-            <p>Joined: {{ user.date_joined|date:"F j, Y" }}</p>
-        </div>
-    </div>
-<!-- Use {% if request.user.is_authenticated %} to check to display the edit profile button-->
     <!-- Profile Cover Section -->
     <div class="cover-background">
         <!-- Lớp nền mờ và gradient -->
@@ -32,6 +86,7 @@
         <!-- Phần cover thật -->
         <div class="profile-cover">
             <div class="cover-edit">
+                <button class="edit-cover-btn" id="editCoverBtn">Chỉnh sửa ảnh</button>
                 <div class="cover-img" id="coverImg"></div>
                 <div class="cover-guide" id="coverGuide">
                     <span style="font-size: 1.5em; vertical-align: middle;">
@@ -43,19 +98,25 @@
             <div class="profile-info">
                 <img src="avatar.jpg" alt="Avatar" class="profile-avatar-large">
                 <div class="profile-details">
-                    <h1 class="profile-name">
-                        {{ user.username }}
-                    </h1>
+                    <h1 class="profile-name">Phạm Truyền</h1>
+                    <div class="profile-friends">
+                        <span>15 bài đánh giá</span> • <span>1,3k lượt tương tác</span> • <span>169 người bạn</span>
+                    </div>
                 </div>
                 <div class="profile-actions">
-                    {% if request.user.is_authenticated %}
-                    <a href="{% url 'edit_profile' user.id %}" class="btn btn-primary">Chỉnh sửa hồ sơ</a>
-                    {% endif %}
+                    <button class="btn friend-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check-icon lucide-user-check"><path d="m16 11 2 2 4-4"/><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                        <span>Bạn bè</span>
+                    </button>
+                    <button class="btn message-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-more-icon lucide-message-circle-more"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>
+                        <span>Nhắn tin</span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-
-
 {% endblock %}
+</body>
+</html>
