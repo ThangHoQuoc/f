@@ -29,18 +29,24 @@
 
     <!-- Popular Destinations -->
     <section class="section">
-      {% for tour in tours %}
+      
       <div class="container">
         <h2>Địa điểm thu hút</h2>
+        
         <div class="grid cards toggle">
-          <div class="card">
-            <img src="{{tour.image_url}}" />
+          {% for tour in tours %}
+          <a href="{% url 'tour_detail' tour.id %}" class="card">
+            <img src="{{ tour.first_image_url }}" alt="{{ tour.title }}" />
             <div class="card-info">
-              <h3>{{tour.destination}}</h3>
-              <p>{{tour.price}}đ / khách</p>
+              <h3>{{ tour.title }}</h3>
+              <p>{{ tour.price }}đ / khách</p>
             </div>
-          </div>
-      {%endfor%}
+          </a>
+          {% empty %}
+          <p>Không có tour nào.</p>
+          {% endfor %}
+        </div>
+      </div>
 
     </section>
 

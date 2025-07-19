@@ -29,6 +29,8 @@ class CompanyTour(models.Model):
     address = models.TextField()
     facebook_link = models.URLField(blank=True, null=True)
     tours = models.ManyToManyField('Tour', related_name='company_tours', blank=True)
+    bank = models.CharField(max_length=100, blank=True, null=True)
+    bank_account_number = models.CharField(max_length=20, blank=True, null=True)
     
     def __str__(self):
         return self.company_name
@@ -52,6 +54,7 @@ class CompanyProfile(models.Model):
     profile_picture = models.ImageField(upload_to=company_logo_upload_path, blank=True, null=True)
     follow = models.ManyToManyField(User, related_name='followed_companies', blank=True)
     admin_verified = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.company.company_name
@@ -78,6 +81,13 @@ class Tour(models.Model):
     duration_night = models.PositiveIntegerField(help_text='Duration in nights')
     def __str__(self):
         return self.title
+    
+    @property
+    def first_image_url(self):
+        first_image = self.images.first()
+        if first_image:
+            return first_image.image.url
+        return None
 
 class TourImage(models.Model):
     tour = models.ForeignKey(Tour, related_name='images', on_delete=models.CASCADE)
