@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ftravel - Đặt tour du lịch</title>
     <link rel="stylesheet" href="{% static 'assets/global.css'%}" />
-    <link rel="stylesheet" href="{% static 'assets/home.css'%}" />
+    <link rel="stylesheet" href="{% static 'assets/style.css'%}" />
     <!-- Flatpickr -->
     <link
       rel="stylesheet"
@@ -46,7 +46,7 @@
             </li>
               {%if request.user.is_authenticated%}  
             <li class="profile-menu">
-              <a href="#" id="profileBtn"
+              <a href="{% url 'profile' request.user.id %}" id="profileBtn"
                 ><i class="fa-regular fa-user"></i> Profile</a>
 
               

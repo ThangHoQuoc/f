@@ -43,10 +43,17 @@ def register(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        
-        user = User.objects.create_user(username=username, email=email, password=password)
-        user.save()
-        return redirect('login')
+        confirm_password = request.POST.get('confirm_password')
+
+        if password != confirm_password:
+            return render(request, 'tourapp/register.html', {'error': 'Mật khẩu không khớp!'})
+        try:
+            User.objects.get(username=username)
+            return render(request, 'tourapp/register.html', {'error': 'Tên đăng nhập đã tồn tại!'})
+        except User.DoesNotExist:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
+            return redirect('login')
     return render(request, 'tourapp/register.html')
 
 def logout(request):
