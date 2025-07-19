@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -131,14 +132,15 @@
 <body>
 
   <!-- Hero scroll section -->
-  <section class="hero-scroll">
-    <img src="C:\Users\ASUS\backendd\f\tourapp\templates\tourapp\img\1.jpg" />
-    <img src="f/tourapp/2.jpg" />
-    <img src="f/tourapp/3.jpg" />
-    <img src="f/tourapp/4.jpg" />
-    <img src="f/tourapp/5.jpg" />
-    <img src="f/tourapp/6.jpg" />
-  </section>
+<section class="hero-scroll">
+  <img src="{% static 'media/login_img/1.jpg' %}" />
+  <img src="{% static 'media/login_img/2.jpg' %}" />
+  <img src="{% static 'media/login_img/3.jpg' %}" />
+  <img src="{% static 'media/login_img/4.jpg' %}" />
+  <img src="{% static 'media/login_img/5.jpg' %}" />
+  <img src="{% static 'media/login_img/6.jpg' %}" />
+</section>
+
 
   <!-- Login form section -->
   <section class="login-section">
