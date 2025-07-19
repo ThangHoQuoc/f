@@ -13,11 +13,13 @@ from .models import CompanyTour, UserProfile, Tour, TourImage, Comment, PendingC
 # Create your views here.
 
 def home(request):
+    tours = Tour.objects.all().order_by('-created_at')[:5]
+    return render(request, 'tourapp/index.html', {'tours': tours})
     return render(request, 'tourapp/index.html')
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST.get('username') 
         password = request.POST.get('password')
         next_url = request.POST.get('next')
         content = request.POST.get('content')
