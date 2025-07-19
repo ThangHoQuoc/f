@@ -1,12 +1,4 @@
-<!-- register.html -->
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Đăng ký | Ftravel</title>
- <style>
-    /* Reset và thiết lập cơ bản */
+/* Reset và thiết lập cơ bản */
 * {
   margin: 0;
   padding: 0;
@@ -112,25 +104,3 @@ hr {
 a {
   text-decoration: none;
 }
-
- </style>
-</head>
-<body>
-  <div class="container">
-    <div class="form-box">
-      <h1>Đăng ký</h1>
-      <form>
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Mật khẩu" required />
-        <input type="password" placeholder="Xác nhận mật khẩu" required />
-        <button type="submit">Đăng ký</button>
-        <hr />
-        <p>Đã có tài khoản?</p>
-        <a href="login.html">
-          <button type="button" class="switch-btn">Quay lại đăng nhập</button>
-        </a>
-      </form>
-    </div>
-  </div>
-</body>
-</html>
