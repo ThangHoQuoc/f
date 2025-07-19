@@ -1,4 +1,342 @@
-{% extends 'layout.html'%}
-<!--Using both for tour list and wishlish-->
-{% block body %}
-{% endblock %}//anh ten gia thoi gian
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Danh sách Tour</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 0;
+      color: #ff6600;
+    }
+
+    .tour-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .tour-card {
+      background-color: #1c1c1e;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .tour-card:hover {
+      transform: scale(1.03);
+    }
+
+    .tour-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .tour-info {
+      padding: 15px;
+    }
+
+    .tour-info h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #ff6600;
+    }
+
+    .tour-info p {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    .time {
+      font-style: italic;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+
+
+  <div class="tour-list">
+    <!-- Tour 1 -->
+    <div class="tour-card" id="danang-card" style="cursor:pointer;">
+      <img src="1.jpg" alt="Tour Đà Nẵng" />
+      <div class="tour-info">
+        <h2>Tour Đà Nẵng</h2>
+        <p class="price">Giá: 2.500.000đ</p>
+        <p class="time">Thời gian: 3 ngày 2 đêm</p>
+      </div>
+    </div>
+
+    <!-- Modal chi tiết Tour Đà Nẵng -->
+    <div id="danang-modal" class="modal-fade" style="display:none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeDanangModal()">&times;</button>
+        <img src="1.jpg" alt="Tour Đà Nẵng" class="modal-img" />
+        <h2>Tour Đà Nẵng</h2>
+        <p class="modal-price"><span class="price">Giá: 2.500.000đ</span></p>
+        <p class="modal-time"><span class="time">Thời gian: 3 ngày 2 đêm</span></p>
+        <ul class="modal-list">
+          <li><b>Điểm đến:</b> Bà Nà Hills, Cầu Rồng, biển Mỹ Khê, Ngũ Hành Sơn, Hội An</li>
+          <li><b>Khởi hành:</b> 15/08/2025</li>
+          <li><b>Phương tiện:</b> Máy bay, xe du lịch</li>
+          <li><b>Khách sạn:</b> 4 sao, gần biển</li>
+          <li><b>Ẩm thực:</b> Buffet sáng, đặc sản miền Trung</li>
+        </ul>
+        <p class="modal-desc">Khám phá thành phố biển Đà Nẵng xinh đẹp với các điểm đến nổi bật, trải nghiệm văn hóa, ẩm thực và dịch vụ cao cấp. Hướng dẫn viên chuyên nghiệp, lịch trình hợp lý, nhiều hoạt động hấp dẫn.</p>
+        <div class="modal-actions">
+          <button class="modal-book">Đặt ngay</button>
+          <button class="modal-contact">Liên hệ</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Tour 2 -->
+    <div class="tour-card" id="sapa-card" style="cursor:pointer;">
+      <img src="6.jpg" alt="Tour Sapa" />
+      <div class="tour-info">
+        <h2>Tour Sapa</h2>
+        <p class="price">Giá: 3.200.000đ</p>
+        <p class="time">Thời gian: 4 ngày 3 đêm</p>
+      </div>
+    </div>
+
+    <!-- Modal chi tiết Tour Sapa -->
+    <div id="sapa-modal" class="modal-fade" style="display:none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeSapaModal()">&times;</button>
+        <img src="6.jpg" alt="Tour Sapa" class="modal-img" />
+        <h2>Tour Sapa</h2>
+        <p class="modal-price"><span class="price">Giá: 3.200.000đ</span></p>
+        <p class="modal-time"><span class="time">Thời gian: 4 ngày 3 đêm</span></p>
+        <ul class="modal-list">
+          <li><b>Điểm đến:</b> Núi Fansipan, bản Cát Cát, Thác Bạc, chợ Sapa</li>
+          <li><b>Khởi hành:</b> 20/08/2025</li>
+          <li><b>Phương tiện:</b> Tàu hỏa, xe du lịch</li>
+          <li><b>Khách sạn:</b> 3 sao, view núi</li>
+          <li><b>Ẩm thực:</b> Đặc sản Tây Bắc, lẩu cá hồi</li>
+        </ul>
+        <p class="modal-desc">Trải nghiệm khí hậu mát lạnh, ngắm ruộng bậc thang, khám phá văn hóa dân tộc thiểu số và chinh phục nóc nhà Đông Dương.</p>
+        <div class="modal-actions">
+          <button class="modal-book">Đặt ngay</button>
+          <button class="modal-contact">Liên hệ</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Tour 3 -->
+    <div class="tour-card" id="phuquoc-card" style="cursor:pointer;">
+      <img src="3.jpg" alt="Tour Phú Quốc" />
+      <div class="tour-info">
+        <h2>Tour Phú Quốc</h2>
+        <p class="price">Giá: 4.000.000đ</p>
+        <p class="time">Thời gian: 5 ngày 4 đêm</p>
+      </div>
+    </div>
+
+    <!-- Modal chi tiết Tour Phú Quốc -->
+    <div id="phuquoc-modal" class="modal-fade" style="display:none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" onclick="closePhuQuocModal()">&times;</button>
+        <img src="3.jpg" alt="Tour Phú Quốc" class="modal-img" />
+        <h2>Tour Phú Quốc</h2>
+        <p class="modal-price"><span class="price">Giá: 4.000.000đ</span></p>
+        <p class="modal-time"><span class="time">Thời gian: 5 ngày 4 đêm</span></p>
+        <ul class="modal-list">
+          <li><b>Điểm đến:</b> Bãi Sao, VinWonders, Hòn Thơm, Suối Tranh</li>
+          <li><b>Khởi hành:</b> 25/08/2025</li>
+          <li><b>Phương tiện:</b> Máy bay, xe du lịch</li>
+          <li><b>Khách sạn:</b> 4 sao, sát biển</li>
+          <li><b>Ẩm thực:</b> Hải sản tươi sống, đặc sản Phú Quốc</li>
+        </ul>
+        <p class="modal-desc">Tận hưởng biển xanh cát trắng, tham quan các đảo, vui chơi giải trí và thưởng thức hải sản tươi ngon.</p>
+        <div class="modal-actions">
+          <button class="modal-book">Đặt ngay</button>
+          <button class="modal-contact">Liên hệ</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Tour 4 -->
+    <div class="tour-card" id="halong-card" style="cursor:pointer;">
+      <img src="4.jpg" alt="Tour Hạ Long" />
+      <div class="tour-info">
+        <h2>Tour Hạ Long</h2>
+        <p class="price">Giá: 2.800.000đ</p>
+        <p class="time">Thời gian: 2 ngày 1 đêm</p>
+      </div>
+    </div>
+
+    <!-- Modal chi tiết Tour Hạ Long -->
+    <div id="halong-modal" class="modal-fade" style="display:none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeHaLongModal()">&times;</button>
+        <img src="4.jpg" alt="Tour Hạ Long" class="modal-img" />
+        <h2>Tour Hạ Long</h2>
+        <p class="modal-price"><span class="price">Giá: 2.800.000đ</span></p>
+        <p class="modal-time"><span class="time">Thời gian: 2 ngày 1 đêm</span></p>
+        <ul class="modal-list">
+          <li><b>Điểm đến:</b> Vịnh Hạ Long, hang Sửng Sốt, đảo Titop, làng chài</li>
+          <li><b>Khởi hành:</b> 30/08/2025</li>
+          <li><b>Phương tiện:</b> Xe du lịch, du thuyền</li>
+          <li><b>Khách sạn:</b> Du thuyền 4 sao</li>
+          <li><b>Ẩm thực:</b> Hải sản Hạ Long, buffet trên tàu</li>
+        </ul>
+        <p class="modal-desc">Tham quan vịnh Hạ Long kỳ vĩ, trải nghiệm ngủ đêm trên du thuyền, thưởng thức hải sản và các hoạt động trên biển.</p>
+        <div class="modal-actions">
+          <button class="modal-book">Đặt ngay</button>
+          <button class="modal-contact">Liên hệ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<style>
+  .modal-fade {
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    display: flex; justify-content: center; align-items: center;
+    animation: modalFadeIn 0.5s;
+  }
+  .modal-overlay {
+    position: absolute; left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.7);
+    z-index: 1;
+  }
+  .modal-content {
+    position: relative;
+    background: #23232b;
+    border-radius: 18px;
+    max-width: 420px;
+    width: 92vw;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    padding: 32px 28px 28px 28px;
+    z-index: 2;
+    animation: modalPopIn 0.5s cubic-bezier(.23,1.01,.32,1);
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    animation-fill-mode: forwards;
+  }
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes modalPopIn {
+    from { opacity: 0; transform: translateY(60px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .modal-close {
+    position: absolute; top: 12px; right: 18px;
+    background: none; border: none; color: #ff6600;
+    font-size: 28px; cursor: pointer; z-index: 3;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: #fff; }
+  .modal-img {
+    width: 100%; height: 200px; object-fit: cover;
+    border-radius: 12px; margin-bottom: 18px;
+    box-shadow: 0 4px 16px rgba(255,102,0,0.15);
+  }
+  .modal-content h2 {
+    color: #ff6600; margin: 0 0 10px 0; font-size: 24px;
+  }
+  .modal-list {
+    list-style: none; padding: 0; margin: 12px 0 10px 0;
+  }
+  .modal-list li { margin-bottom: 6px; font-size: 15px; }
+  .modal-desc { margin: 12px 0 0 0; font-size: 15px; color: #eee; }
+  .modal-actions {
+    display: flex; gap: 14px; margin-top: 22px;
+  }
+  .modal-book {
+    flex: 1; padding: 13px 0; background: #ff6600; color: white;
+    border: none; border-radius: 7px; font-weight: bold; font-size: 16px; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .modal-book:hover { background: #e65c00; }
+  .modal-contact {
+    flex: 1; padding: 13px 0; background: transparent; color: #ff6600;
+    border: 2px solid #ff6600; border-radius: 7px; font-weight: bold; font-size: 16px; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .modal-contact:hover { background: #ff6600; color: #fff; }
+</style>
+<script>
+
+  function openDanangModal() {
+    openModal('danang-modal');
+  }
+  function closeDanangModal() {
+    closeModal('danang-modal');
+  }
+  document.getElementById('danang-card').onclick = openDanangModal;
+
+  function openSapaModal() {
+    openModal('sapa-modal');
+  }
+  function closeSapaModal() {
+    closeModal('sapa-modal');
+  }
+  document.getElementById('sapa-card').onclick = openSapaModal;
+
+  function openPhuQuocModal() {
+    openModal('phuquoc-modal');
+  }
+  function closePhuQuocModal() {
+    closeModal('phuquoc-modal');
+  }
+  document.getElementById('phuquoc-card').onclick = openPhuQuocModal;
+
+  function openHaLongModal() {
+    openModal('halong-modal');
+  }
+  function closeHaLongModal() {
+    closeModal('halong-modal');
+  }
+  document.getElementById('halong-card').onclick = openHaLongModal;
+
+  function openModal(id) {
+    var modal = document.getElementById(id);
+    modal.style.display = 'flex';
+    var content = modal.querySelector('.modal-content');
+    content.style.opacity = 0;
+    content.style.transform = 'translateY(40px) scale(0.98)';
+    setTimeout(function() {
+      content.style.opacity = 1;
+      content.style.transform = 'translateY(0) scale(1)';
+    }, 10);
+  }
+  function closeModal(id) {
+    var modal = document.getElementById(id);
+    modal.style.display = 'none';
+  }
+</script>
+</html>
