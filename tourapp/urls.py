@@ -44,4 +44,8 @@ urlpatterns = [
     #api paths
     path("api/user/booked-tours/", views.user_booked_tours_api, name="user_booked_tours_api"),
     path("tour/<int:tour_id>/comments/", views.tour_comments_api, name="tour_comments_api"),
+    
+    # booking paths
+    path("tour/<int:tour_id>/book/", views.book_tour, name="book_tour"),
+    path('payment/', views.payment_view, name='payment_view'),
 ]
