@@ -121,9 +121,9 @@ def unlove_tour(request, tour_id):
 
 def user_profile(request, user_id):
     user = User.objects.get(id=user_id)
-    profile = UserProfile.objects.get(user=user)
-    tours = user.booked_tours.all()
-    return render(request, 'tourapp/user_profile.html', {'user': user, 'profile': profile, 'tours': tours})
+    profile = UserProfile.objects.get(id=user.id)
+
+    return render(request, 'tourapp/user_profile.html', {'user': user, 'profile': profile})
 
 
 @login_required
