@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ tour.title }}</h2>
+<p>{{ tour.description }}</p>
+<p>Price: {{ tour.price }}</p>
+<p>Duration: {{ tour.duration_day }} days, {{ tour.duration_night }} nights</p>
+<h3>Images</h3>
+<div>
+    {% for img in tour.images.all %}
+        <img src="{{ img.image.url }}" style="max-width:150px; margin:5px;">
+    {% empty %}
+        <p>No images uploaded.</p>
+    {% endfor %}
+</div>
+{% endblock %}

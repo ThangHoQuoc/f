@@ -1,0 +1,151 @@
+{% block body %}
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <a href="#" onclick="location.reload()" class="logo-link">Ftravel</a>
+        </div>
+
+        <nav class="nav">
+          <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Trang chủ</a></li>
+            <li><a href="{% url 'become_companion' %}">Trở thành Tour Companion</a></li>
+            <li>
+              <a href="{% url 'wishlist' %}"><i class="fa-regular fa-heart"></i> Wishlist</a>
+            </li>
+            <li class="profile-menu">
+              <a href="{% url 'profile' %}" id="profileBtn"
+                ><i class="fa-regular fa-user"></i> Profile</a
+              >
+              <div class="dropdown">
+                <div class="dropdown-header">Profile</div>
+                <a href="#">Log in or sign up</a>
+                <a href="#"
+                  >Updates <span class="badge">Newest Version</span></a
+                >
+                <a href="#"
+                  >Appearance <span class="right">Always dark</span></a
+                >
+                <a href="#">Support</a>
+                <a href="#">Download the app</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero banner -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Khám phá và trải nghiệm mọi nơi trên thế giới một cách dễ dàng!</h1>
+        <div class="search-bar">
+          <div class="search-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <input type="text" placeholder="Bạn muốn đi đâu?" />
+          </div>
+
+          <div class="search-item">
+            <i class="fa-solid fa-calendar-days"></i>
+            <input
+              type="text"
+              id="departureDate"
+              placeholder="Ngày khởi hành"
+            />
+          </div>
+
+          <button class="btn btn-orange search-btn">Tìm kiếm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Popular Destinations -->
+    <section class="section">
+      <div class="container">
+        <h2>Địa điểm thu hút</h2>
+        <div class="grid cards toggle">
+          <div class="card">
+            <img src="{image_url}" />
+            <div class="card-info">
+              <h3>{destination}</h3>
+              <p>{price}đ / khách</p>
+            </div>
+          </div>
+
+    </section>
+
+    <!-- Reviews -->
+    <section class="section light">
+      <div class="container">
+        <h2>Đánh giá từ người đã trải nghiệm</h2>
+        <div class="reviews">
+          <div class="review">
+            <img
+              src="https://randomuser.me/api/portraits/men/45.jpg"
+              class="avatar"
+            />
+            <p>"Tour xịn, sang trọng, rất ổn!"</p>
+            <strong>— Anh Thắng</strong>
+          </div>
+          <div class="review">
+            <img
+              src="https://randomuser.me/api/portraits/women/65.jpg"
+              class="avatar"
+            />
+            <p>"Trải nghiệm đáng nhớ, dịch vụ tốt."</p>
+            <strong>— Chị Hạnh</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div class="footer-column">
+          <h4>Ftravel</h4>
+          <p>
+            Chúng tôi cung cấp dịch vụ du lịch trọn gói, đặt tour, khách sạn và
+            trải nghiệm địa phương.
+          </p>
+        </div>
+        <div class="footer-column">
+          <h4>Về chúng tôi</h4>
+          <ul>
+            <li><a href="#">Giới thiệu</a></li>
+            <li><a href="#">Tuyển dụng</a></li>
+            <li><a href="#">Điều khoản dịch vụ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Hỗ trợ</h4>
+          <ul>
+            <li><a href="#">Câu hỏi thường gặp</a></li>
+            <li><a href="#">Chính sách hủy</a></li>
+            <li><a href="#">Liên hệ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Kết nối với chúng tôi</h4>
+          <ul class="social-links">
+            <li>
+              <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="container copyright">
+        <p>&copy; 2025 Ftravel. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+{% endblock %}

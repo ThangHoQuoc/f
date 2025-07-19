@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create New Tour</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Title:</label><input type="text" name="title" required><br>
+    <label>Description:</label><textarea name="description" required></textarea><br>
+    <label>Price:</label><input type="number" name="price" step="0.01" required><br>
+    <label>Duration (days):</label><input type="number" name="duration_day" required><br>
+    <label>Duration (nights):</label><input type="number" name="duration_night" required><br>
+    <button type="submit">Next: Upload Images</button>
+</form>
+{% endblock %}

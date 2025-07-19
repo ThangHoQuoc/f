@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ company.company_name }}</h2>
+<p>{{ company.address }}</p>
+<p>{{ company.email }}</p>
+<p>Posted Tours:</p>
+<ul>
+    {% for tour in posted_tours %}
+        <li>
+            <a href="{% url 'tour_detail' tour.id %}">{{ tour.title }}</a>
+        </li>
+    {% empty %}
+        <li>No tours posted yet.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'upload_tour' company.id %}">Add New Tour</a>
+{% endblock %}

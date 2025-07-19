@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Upload Images for {{ tour.title }}</h2>
+<form id="image-upload-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="image" id="image-input" accept="image/*" required>
+    <button type="submit">Upload</button>
+</form>
+<div id="image-list">
+    <!-- Images will be loaded here -->
+</div>
+<button id="finish-btn">Finish</button>
+<script src="{% static 'js/tour_controller.js' %}"></script>
+<script>
+const tourId = "{{ tour.id }}";
+const uploadUrl = "{% url 'upload_tour_image_api' tour.id %}";
+const imagesUrl = "{% url 'tour_images_api' tour.id %}";
+const finishUrl = "{% url 'company_profile' tour.created_by.companytour.id %}";
+
+function loadImages() {
+    fetch(imagesUrl)
+        .then(res => res.json())
+        .then(data => {
+            const list = document.getElementById('image-list');
+            list.innerHTML = '';
+            data.images.forEach(img => {
+                const imgElem = document.createElement('img');
+                imgElem.src = img.url;
+                imgElem.style.maxWidth = '150px';
+                imgElem.style.margin = '5px';
+                list.appendChild(imgElem);
+            });
+        });
+}
+
+document.getElementById('image-upload-form').onsubmit = function(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('image', document.getElementById('image-input').files[0]);
+    fetch(uploadUrl, {
+        method: 'POST',
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        loadImages();
+        document.getElementById('image-input').value = '';
+    });
+};
+
+document.getElementById('finish-btn').onclick = function() {
+    window.location.href = finishUrl;
+};
+
+window.onload = loadImages;
+</script>
+{% endblock %}
