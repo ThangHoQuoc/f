@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.db import IntegrityError
 from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_http_methods
 import json
 from django.views.decorators.http import require_POST
 
@@ -326,3 +328,36 @@ def delete_tour(request, tour_id, image_id):
     image = TourImage.objects.get(id=image_id, tour=tour)
     image.delete()
     return JsonResponse({'status': 'ok'})
+
+@require_http_methods(["GET", "POST"])
+def book_tour(request, tour_id):
+    tour = get_object_or_404(Tour, id=tour_id)
+
+    if request.method == "POST":
+        bank_name = request.POST.get("bank_name")
+        bank_number = request.POST.get("bank_number")
+        amount = tour.price
+        qr_data = f"{bank_name}:{bank_number} - ${amount}"
+
+        # Redirect to payment page, passing data via session (or GET for demo)
+        request.session['qr_data'] = qr_data
+        request.session['tour_title'] = tour.title
+        request.session['amount'] = float(amount)
+        return redirect('payment_view')
+
+    return render(request, 'tourapp/book_form.html', {'tour': tour})
+
+def payment_view(request):
+    qr_data = request.session.get('qr_data', 'Unknown')
+    tour_title = request.session.get('tour_title', 'Unknown')
+    amount = request.session.get('amount', 0)
+
+    # Create QR URL via qr.io-like services (use a free one like goqr.me)
+    qr_url = f"https://api.qrserver.com/v1/create-qr-code/?data={qr_data}&size=200x200"
+
+    return render(request, 'tourapp/pay.html', {
+        'qr_url': qr_url,
+        'tour_title': tour_title,
+        'amount': amount,
+        'qr_data': qr_data
+    })

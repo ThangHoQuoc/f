@@ -1,15 +1,197 @@
-{% extends "layout.html" %}
-{% block content %}
-<h2>{{ tour.title }}</h2>
-<p>{{ tour.description }}</p>
-<p>Price: {{ tour.price }}</p>
-<p>Duration: {{ tour.duration_day }} days, {{ tour.duration_night }} nights</p>
-<h3>Images</h3>
-<div>
-    {% for img in tour.images.all %}
-        <img src="{{ img.image.url }}" style="max-width:150px; margin:5px;">
-    {% empty %}
-        <p>No images uploaded.</p>
-    {% endfor %}
+{% extends 'tourapp/layout.html' %}
+
+{% block body %}
+<style>
+    .tour-detail-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 30px;
+        gap: 50px;
+    }
+
+    .tour-image-main {
+        flex: 1 1 400px;
+    }
+
+    .tour-image-main img {
+        max-width: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .tour-info {
+        flex: 1 1 500px;
+    }
+
+    .tour-info p {
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .image-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .image-gallery img {
+        height: 160px;
+        width: auto;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .comment-section {
+        margin-top: 40px;
+    }
+
+    .comment-box {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        background-color: #f9f9f9;
+    }
+
+    .comment-box strong {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .comment-form textarea {
+        width: 100%;
+        height: 80px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        resize: vertical;
+    }
+
+    .comment-form button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+
+    .comment-form button:hover {
+        background-color: #0056b3;
+    }
+
+    .tour-actions {
+        margin-top: 10px;
+    }
+
+    .tour-actions .btn {
+        font-size: 16px;
+        padding: 8px 20px;
+        margin-right: 10px;
+        border-radius: 6px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+        color: white;
+    }
+
+    .btn-outline-danger {
+        background-color: transparent;
+        border: 1px solid #dc3545;
+        color: #dc3545;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="container">
+    <h1>{{ tour.title }}</h1>
+
+    <div class="tour-detail-container">
+        <!-- Main image -->
+        <div class="tour-image-main">
+            {% if tour.first_image_url %}
+                <img src="{{ tour.first_image_url }}" alt="{{ tour.title }}">
+            {% endif %}
+        </div>
+
+        <!-- Info -->
+        <div class="tour-info">
+            <p>{{ tour.description }}</p>
+            <p><strong>Price:</strong> ${{ tour.price }}</p>
+            <p><strong>Duration:</strong> {{ tour.duration_day }} days / {{ tour.duration_night }} nights</p>
+            <p><strong>Posted by:</strong> {{ tour.created_by.username }}</p>
+            <p><strong>Created at:</strong> {{ tour.created_at|date:"d M Y H:i" }}</p>
+            <p><strong>Updated at:</strong> {{ tour.updated_at|date:"d M Y H:i" }}</p>
+            {% if tour.loved.all %}
+                <p><strong>Loved by:</strong>
+                    {% for user in tour.loved.all %}
+                        {{ user.username }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="tour-actions mb-3">
+    {% if request.user.is_authenticated %}
+        {% if request.user in tour.loved.all %}
+            <button id="love-btn" class="btn btn-outline-danger" data-loved="true" data-tour="{{ tour.id }}">💔 Bỏ yêu thích</button>
+        {% else %}
+            <button id="love-btn" class="btn btn-danger" data-loved="false" data-tour="{{ tour.id }}">❤️ Yêu thích</button>
+        {% endif %}
+    {% else %}
+        <a href="/login/?next=/tour/{{ tour.id }}/" class="btn btn-secondary">Đăng nhập để yêu thích</a>
+    {% endif %}
+    <a href="{% url 'book_tour' tour.id %}" class="btn btn-primary ms-2">📘 Book Tour</a>
+    </div>
+
+    <!-- Gallery images -->
+    {% if tour.images.all %}
+        <div class="image-gallery">
+            {% for img in tour.images.all %}
+                <img src="{{ img.image.url }}" alt="Tour Image">
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Comments -->
+    <div class="comment-section">
+        <h3>Comments</h3>
+        {% for comment in comments %}
+            <div class="comment-box">
+                <strong>{{ comment.user.username }}</strong>
+                <p>{{ comment.content }}</p>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+
+        <!-- Comment form -->
+        <div class="comment-form mt-3">
+            <form method="POST">
+                {% csrf_token %}
+                <textarea name="content" placeholder="Write your comment..."></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
