@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'assets/user_profile.css' %}">
     <script src="{% static 'js/user_profile.js' %}"></script>
     <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>FTravel - Profile</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
             </div>
             <!-- Search Bar -->
             <form class="search-bar">
-                <i class="icon-search"></i>
+                <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" placeholder="Tìm kiếm ...." />
                 <button type="submit">Tìm kiếm</button>
             </form>
@@ -90,7 +91,7 @@
                 <div class="cover-img" id="coverImg"></div>
                 <div class="cover-guide" id="coverGuide">
                     <span style="font-size: 1.5em; vertical-align: middle;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-icon lucide-move"><path d="M12 2v20"/><path d="m15 19-3 3-3-3"/><path d="m19 9 3 3-3 3"/><path d="M2 12h20"/><path d="m5 9-3 3 3 3"/><path d="m9 5 3-3 3 3"/></svg>
+                        <i class="icon-move"></i>
                     </span>
                     <span>Kéo hoặc dùng các phím mũi tên để đặt lại vị trí hình ảnh</span>
                 </div>
@@ -99,21 +100,43 @@
                 <img src="avatar.jpg" alt="Avatar" class="profile-avatar-large">
                 <div class="profile-details">
                     <h1 class="profile-name">Phạm Truyền</h1>
-                    <div class="profile-friends">
-                        <span>15 bài đánh giá</span> • <span>1,3k lượt tương tác</span> • <span>169 người bạn</span>
+                    <div class="under-name">
+                        <div class="social-links">
+                            <span><a href="#"><i class="fa-brands fa-facebook"></i></a></span> • <span><a href="#"><i class="fa-brands fa-instagram"></i></a></span> • <span><a href="#"><i class="fa-brands fa-twitter"></i></a></span>
+                        </div>
+                        <div class="actions">
+                            <button class="action-btn">
+                                <i class="icon-circle-alert"></i>
+                                <span>Report</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="profile-actions">
-                    <button class="btn friend-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check-icon lucide-user-check"><path d="m16 11 2 2 4-4"/><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                        <span>Bạn bè</span>
-                    </button>
-                    <button class="btn message-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-more-icon lucide-message-circle-more"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>
-                        <span>Nhắn tin</span>
-                    </button>
-                </div>
             </div>
+        </div>
+    </div>
+    <!-- Tour List -->
+    <div class="tour-container">
+        <div class="tour-header">
+            <h2>Booked Tours</h2>
+        </div>
+        <div class="tour-list">
+            <div class="tour-card">
+                <a href="{% url 'home'%}">
+                    <img src="https://maytinhvui.com/wp-content/uploads/2020/11/hinh-nen-may-tinh-4k-game-04.jpg" alt="Tour Đà Nẵng" />
+                    <div class="tour-info">
+                    <h2 class="tour-name-rating">
+                        <span class="tour-name">Tour Đà Nẵng</span>
+                        <span class="tour-rating">
+                            <span>4.5/5</span>
+                            <i class="icon-star"></i>
+                        </span>
+                    </h2>
+                    <p class="price">Giá: 2.500.000đ</p>
+                    <p class="time">Thời gian: 3 ngày 2 đêm</p>
+                    </div>
+                </a>
+             </div>
         </div>
     </div>
 
